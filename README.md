@@ -1,6 +1,7 @@
 👤 Personal Portfolio Website
 Welcome to the repository of my personal portfolio! This website serves as a digital resume and a showcase of my journey as a developer. It features my projects, technical skills, and a way to get in touch with me.
-![alt text](munalthapa710.com.np)
+link 
+[munalthapa710.com.np]
 🌐 Live Demo
 Check out the live version here: [Link to your hosted site,Netlify]
 ✨ Features
