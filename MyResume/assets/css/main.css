@@ -1389,7 +1389,6 @@ body {
   backdrop-filter: blur(8px);
 }
 
-.hero-panel,
 .about-content-card,
 .skills-card,
 .timeline-card,
@@ -1402,48 +1401,6 @@ body {
   border: 1px solid rgba(16, 24, 40, 0.08);
   box-shadow: 0 20px 60px rgba(26, 34, 52, 0.08);
   backdrop-filter: blur(14px);
-}
-
-.hero-panel {
-  border-radius: 28px;
-  padding: 24px;
-}
-
-.hero-panel-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: color-mix(in srgb, var(--default-color), transparent 25%);
-}
-
-.hero-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.hero-stat-card {
-  padding: 18px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.55);
-  min-height: 150px;
-}
-
-.hero-stat-card strong {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--heading-color);
-  font-size: 1.25rem;
-}
-
-.hero-stat-card span {
-  color: color-mix(in srgb, var(--default-color), transparent 18%);
-  line-height: 1.7;
 }
 
 .about-portrait-card,
@@ -1750,15 +1707,9 @@ body {
     padding: 72px 0;
   }
 
-  .hero-panel-header,
-  .hero-stat-grid,
   .about-details-grid,
   .focus-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-panel-header {
-    display: grid;
   }
 }
 
@@ -1802,7 +1753,6 @@ body {
     font-size: 28px;
   }
 
-  .hero-panel,
   .about-content-card,
   .skills-card,
   .timeline-card,
