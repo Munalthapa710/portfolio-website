@@ -19,7 +19,9 @@
     headerToggleBtn.classList.toggle("bi-list");
     headerToggleBtn.classList.toggle("bi-x");
   }
-  headerToggleBtn.addEventListener("click", headerToggle);
+  if (headerToggleBtn) {
+    headerToggleBtn.addEventListener("click", headerToggle);
+  }
 
   /**
    * Hide mobile nav on same-page/hash links
@@ -66,13 +68,15 @@
         : scrollTop.classList.remove("active");
     }
   }
-  scrollTop.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+  if (scrollTop) {
+    scrollTop.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
-  });
+  }
 
   window.addEventListener("load", toggleScrollTop);
   document.addEventListener("scroll", toggleScrollTop);
@@ -241,4 +245,85 @@
   }
   window.addEventListener("load", navmenuScrollspy);
   document.addEventListener("scroll", navmenuScrollspy);
+
+  /**
+   * Contact form
+   */
+  const contactForm = document.querySelector("#contact-form");
+  const statusBox = document.querySelector("#form-status");
+  const submitButton = document.querySelector("#contactSubmit");
+
+  function setFormStatus(type, message) {
+    if (!statusBox) return;
+
+    statusBox.className = "form-status is-visible";
+    if (type) {
+      statusBox.classList.add(`is-${type}`);
+    }
+    statusBox.textContent = message;
+  }
+
+  async function sendContactForm(event) {
+    event.preventDefault();
+
+    if (!contactForm) return;
+
+    const payload = {
+      to_name: "Munal Thapa",
+      from_name: document.querySelector("#contactName")?.value.trim(),
+      from_email: document.querySelector("#contactEmail")?.value.trim(),
+      subject: document.querySelector("#contactSubject")?.value.trim(),
+      message: document.querySelector("#contactMessage")?.value.trim(),
+    };
+
+    if (
+      !payload.from_name ||
+      !payload.from_email ||
+      !payload.subject ||
+      !payload.message
+    ) {
+      setFormStatus("error", "Please fill in all fields before sending.");
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+    setFormStatus("loading", "Sending your message...");
+
+    try {
+      if (!window.emailjs) {
+        throw new Error("EmailJS failed to load.");
+      }
+
+      window.emailjs.init({
+        publicKey: "2Aa4h-Hp6C82KBjZi",
+      });
+
+      await window.emailjs.send(
+        "service_6qwhgkr",
+        "template_q5jtmvf",
+        payload
+      );
+
+      contactForm.reset();
+      setFormStatus("success", "Message sent successfully. I will get back to you soon.");
+    } catch (error) {
+      setFormStatus(
+        "error",
+        "Message could not be sent right now. Please email thapamunal710@gmail.com directly."
+      );
+      console.error("Contact form error:", error);
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message";
+      }
+    }
+  }
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", sendContactForm);
+  }
 })();
