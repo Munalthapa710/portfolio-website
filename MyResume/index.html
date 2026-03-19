@@ -5,11 +5,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Munal Thapa | Portfolio</title>
     <meta
-      content="Portfolio of Munal Thapa, a web developer and UI/UX designer building responsive digital experiences."
+      content="Portfolio of Munal Thapa, a web developer and UI designer building bold, responsive digital experiences."
       name="description"
     />
     <meta
-      content="Munal Thapa, portfolio, web developer, UI UX designer, frontend developer, Nepal"
+      content="Munal Thapa, portfolio, web developer, UI designer, frontend developer, Nepal"
       name="keywords"
     />
 
@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -32,11 +32,6 @@
       rel="stylesheet"
     />
     <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
-    <link
-      href="assets/vendor/glightbox/css/glightbox.min.css"
-      rel="stylesheet"
-    />
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
     <link href="assets/css/main.css" rel="stylesheet" />
     <script
@@ -65,6 +60,11 @@
             >
           </li>
           <li>
+            <a href="#skills"
+              ><i class="bi bi-stars navicon"></i><span>Skills</span></a
+            >
+          </li>
+          <li>
             <a href="#resume"
               ><i class="bi bi-file-earmark-text navicon"></i
               ><span>Journey</span></a
@@ -72,7 +72,7 @@
           </li>
           <li>
             <a href="#portfolio"
-              ><i class="bi bi-images navicon"></i><span>Work</span></a
+              ><i class="bi bi-grid navicon"></i><span>Work</span></a
             >
           </li>
           <li>
@@ -86,30 +86,48 @@
 
     <main class="main">
       <section id="hero" class="hero section">
-        <img src="./assets/img/ingg1.jpg" alt="Munal Thapa portrait background" />
+        <div class="hero-orb hero-orb-left"></div>
+        <div class="hero-orb hero-orb-right"></div>
 
-        <div class="container hero-shell" data-aos="zoom-out">
+        <div class="container hero-shell">
           <div class="row align-items-center gy-5">
-            <div class="col-lg-7">
+            <div class="col-xl-7" data-aos="fade-right" data-aos-delay="100">
               <div class="hero-copy">
-                <span class="hero-eyebrow">Portfolio 2026</span>
-                <h1>Munal Thapa</h1>
+                <span class="hero-kicker">Portfolio / 2026</span>
+                <p class="hero-intro">Kathmandu based creative developer</p>
+                <h1>
+                  Munal
+                  <span>Thapa</span>
+                </h1>
                 <p class="hero-lead">
-                  I design and build thoughtful websites that feel polished on
-                  mobile, clear on desktop, and fast enough to stay out of the
-                  way.
+                  I design sharp, modern websites with strong visual rhythm,
+                  smooth mobile behavior, and a presentation style that feels
+                  more cinematic than corporate.
                 </p>
                 <p class="hero-role">
                   <span>I work as a </span>
                   <span
                     class="typed"
-                    data-typed-items="Web Developer,UI/UX Designer,Frontend Builder,Creative Problem Solver"
+                    data-typed-items="Web Developer,UI Designer,Frontend Builder,Creative Problem Solver"
                   ></span>
                 </p>
+
                 <div class="hero-actions">
-                  <a class="btn-primary-solid" href="#portfolio">View Work</a>
-                  <a class="btn-secondary-ghost" href="#contact">Start a Conversation</a>
+                  <a class="btn-primary-solid" href="#portfolio">See My Work</a>
+                  <a class="btn-secondary-ghost" href="#contact">Book a Project</a>
                 </div>
+
+                <div class="hero-meta">
+                  <div class="hero-meta-card">
+                    <span class="meta-label">Speciality</span>
+                    <strong>Portfolio sites, landing pages, UI refreshes</strong>
+                  </div>
+                  <div class="hero-meta-card">
+                    <span class="meta-label">Availability</span>
+                    <strong>Freelance projects open</strong>
+                  </div>
+                </div>
+
                 <div class="social-links">
                   <a href="https://github.com/Munalthapa710" aria-label="GitHub"
                     ><i class="bi bi-github"></i
@@ -131,168 +149,242 @@
               </div>
             </div>
 
+            <div class="col-xl-5" data-aos="fade-left" data-aos-delay="200">
+              <div class="hero-visual">
+                <div class="portrait-frame">
+                  <div class="portrait-backdrop"></div>
+                  <img
+                    src="assets/img/munal-portrait-2026.jpg"
+                    alt="Munal Thapa portrait"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-ticker">
+          <div class="ticker-track">
+            <span>Web Developer</span>
+            <span>UI Designer</span>
+            <span>Responsive Frontends</span>
+            <span>Portfolio Websites</span>
+            <span>Landing Pages</span>
+            <span>Freelance Available</span>
+            <span>Web Developer</span>
+            <span>UI Designer</span>
+            <span>Responsive Frontends</span>
+            <span>Portfolio Websites</span>
+            <span>Landing Pages</span>
+            <span>Freelance Available</span>
           </div>
         </div>
       </section>
 
       <section id="about" class="about section">
-        <div class="container section-title" data-aos="fade-up">
-          <h2>About Me</h2>
-          <p>
-            I enjoy turning ideas into clean digital experiences with strong
-            structure, practical design decisions, and interfaces that stay easy
-            to use on every screen size.
-          </p>
-        </div>
+        <div class="container">
+          <div class="section-heading" data-aos="fade-up">
+            <span class="section-kicker">About</span>
+            <h2>Built to look distinct and still stay practical.</h2>
+          </div>
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4 align-items-center">
-            <div class="col-lg-5">
-              <div class="about-portrait-card">
-                <img src="./assets/img/imgg.jpg" class="img-fluid" alt="Munal Thapa" />
+          <div class="about-grid">
+            <article class="about-story panel-card" data-aos="fade-up" data-aos-delay="100">
+              <p class="story-lead">
+                I am Munal Thapa, a developer from Kathmandu who likes solving
+                design and technical problems together.
+              </p>
+              <p>
+                My work is focused on responsive websites, strong visual
+                hierarchy, and interfaces that feel modern without becoming
+                confusing. I care about the details that make a website feel
+                polished the moment it opens.
+              </p>
+            </article>
+
+            <article class="about-details panel-card" data-aos="fade-up" data-aos-delay="180">
+              <div class="detail-row">
+                <span>Location</span>
+                <strong>Kathmandu, Nepal</strong>
               </div>
-            </div>
-            <div class="col-lg-7">
-              <div class="about-content-card">
-                <h3>Web developer with a UI-first mindset</h3>
-                <p>
-                  I am Munal Thapa, a developer from Kathmandu who likes solving
-                  visual and technical problems together. My focus is on
-                  responsive websites, intuitive layouts, and experiences that
-                  feel modern without becoming heavy or confusing.
-                </p>
-
-                <div class="about-details-grid">
-                  <div class="about-detail-item">
-                    <span class="detail-label">Location</span>
-                    <strong>Kathmandu, Nepal</strong>
-                  </div>
-                  <div class="about-detail-item">
-                    <span class="detail-label">Email</span>
-                    <strong>thapamunal710@gmail.com</strong>
-                  </div>
-                  <div class="about-detail-item">
-                    <span class="detail-label">Phone</span>
-                    <strong>+977 9869269374</strong>
-                  </div>
-                  <div class="about-detail-item">
-                    <span class="detail-label">Website</span>
-                    <strong>munalthapa710.com.np</strong>
-                  </div>
-                </div>
-
-                <div class="focus-grid">
-                  <article class="focus-card">
-                    <i class="bi bi-layout-text-window-reverse"></i>
-                    <h4>Responsive Frontends</h4>
-                    <p>
-                      Layouts that hold together cleanly from mobile widths to
-                      large desktops.
-                    </p>
-                  </article>
-                  <article class="focus-card">
-                    <i class="bi bi-bezier2"></i>
-                    <h4>Interface Design</h4>
-                    <p>
-                      Balanced typography, spacing, and hierarchy that improve
-                      readability.
-                    </p>
-                  </article>
-                  <article class="focus-card">
-                    <i class="bi bi-lightning-charge"></i>
-                    <h4>Practical Delivery</h4>
-                    <p>
-                      Simple, maintainable builds that are easy to deploy and
-                      update.
-                    </p>
-                  </article>
-                </div>
+              <div class="detail-row">
+                <span>Email</span>
+                <strong>thapamunal710@gmail.com</strong>
               </div>
-            </div>
+              <div class="detail-row">
+                <span>Phone</span>
+                <strong>+977 9869269374</strong>
+              </div>
+              <div class="detail-row">
+                <span>Website</span>
+                <strong>munalthapa710.com.np</strong>
+              </div>
+            </article>
+          </div>
+
+          <div class="focus-grid" data-aos="fade-up" data-aos-delay="240">
+            <article class="focus-card">
+              <i class="bi bi-layout-text-window-reverse"></i>
+              <h3>Responsive Frontends</h3>
+              <p>
+                Layouts that stay clean from phone screens to large desktops.
+              </p>
+            </article>
+            <article class="focus-card">
+              <i class="bi bi-bezier2"></i>
+              <h3>Interface Design</h3>
+              <p>
+                Better spacing, typography, and structure for stronger first
+                impressions.
+              </p>
+            </article>
+            <article class="focus-card">
+              <i class="bi bi-lightning-charge"></i>
+              <h3>Practical Delivery</h3>
+              <p>
+                Easy-to-maintain sites that are lightweight, direct, and ready
+                to deploy.
+              </p>
+            </article>
           </div>
         </div>
       </section>
 
       <section id="skills" class="skills section">
-        <div class="container section-title" data-aos="fade-up">
-          <h2>Skills</h2>
-          <p>
-            A blend of frontend development, design thinking, and practical
-            implementation.
-          </p>
-        </div>
+        <div class="container">
+          <div class="section-heading" data-aos="fade-up">
+            <span class="section-kicker">Skills</span>
+            <h2>Strong fundamentals with an eye for presentation.</h2>
+          </div>
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-lg-6">
-              <div class="skills-card">
-                <h3>Core stack</h3>
-                <div class="skills-content skills-animation">
-                  <div class="progress">
-                    <span class="skill"
-                      ><span>HTML</span> <i class="val">95%</i></span
-                    >
-                    <div class="progress-bar-wrap">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="95"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+          <div class="skills-layout">
+            <div class="skills-card panel-card" data-aos="fade-up" data-aos-delay="100">
+              <h3>Core stack</h3>
+              <div class="skills-content skills-animation">
+                <div class="progress">
+                  <span class="skill"
+                    ><span>HTML</span> <i class="val">95%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="95"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
+                </div>
 
-                  <div class="progress">
-                    <span class="skill"
-                      ><span>CSS</span> <i class="val">92%</i></span
-                    >
-                    <div class="progress-bar-wrap">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="92"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                <div class="progress">
+                  <span class="skill"
+                    ><span>CSS</span> <i class="val">92%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="92"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
+                </div>
 
-                  <div class="progress">
-                    <span class="skill"
-                      ><span>JavaScript</span> <i class="val">78%</i></span
-                    >
-                    <div class="progress-bar-wrap">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="78"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                <div class="progress">
+                  <span class="skill"
+                    ><span>JavaScript</span> <i class="val">78%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="78"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
+                </div>
 
-                  <div class="progress">
-                    <span class="skill"
-                      ><span>Bootstrap</span> <i class="val">88%</i></span
-                    >
-                    <div class="progress-bar-wrap">
-                      <div
-                        class="progress-bar"
-                        role="progressbar"
-                        aria-valuenow="88"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                <div class="progress">
+                  <span class="skill"
+                    ><span>Bootstrap</span> <i class="val">88%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="88"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress">
+                  <span class="skill"
+                    ><span>Vite.js</span> <i class="val">84%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="84"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress">
+                  <span class="skill"
+                    ><span>Next.js</span> <i class="val">80%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="80"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress">
+                  <span class="skill"
+                    ><span>Python</span> <i class="val">76%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="76"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="progress">
+                  <span class="skill"
+                    ><span>Database</span> <i class="val">72%</i></span
+                  >
+                  <div class="progress-bar-wrap">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      aria-valuenow="72"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-lg-6">
-              <div class="skills-card skills-card-alt">
+            <div class="panel-stack" data-aos="fade-up" data-aos-delay="160">
+              <article class="panel-card strengths-card">
                 <h3>Tools and strengths</h3>
                 <div class="skill-chip-grid">
                   <span>Responsive Design</span>
@@ -304,52 +396,55 @@
                   <span>Accessibility Basics</span>
                   <span>Visual Hierarchy</span>
                 </div>
-                <p class="skills-note">
-                  I care most about clear user flow, readable content, and
-                  polished presentation over unnecessary complexity.
+              </article>
+
+              <article class="panel-card quote-card">
+                <span class="quote-mark">"</span>
+                <p>
+                  I care most about clarity, flow, and presentation instead of
+                  complexity for its own sake.
                 </p>
-              </div>
+              </article>
             </div>
           </div>
         </div>
       </section>
 
       <section id="resume" class="resume section">
-        <div class="container section-title" data-aos="fade-up">
-          <h2>Journey</h2>
-          <p>My education path and the direction I am building toward.</p>
-        </div>
-
         <div class="container">
-          <div class="row gy-4">
-            <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
-              <div class="timeline-card">
-                <h3 class="resume-title">Education</h3>
-                <div class="resume-item">
-                  <h4>+2</h4>
-                  <h5>2076 - 2078</h5>
-                  <p><em>KMC, Lalitpur</em></p>
-                  <p>
-                    Built a strong academic base while developing interest in
-                    technology and digital creation.
-                  </p>
-                </div>
+          <div class="section-heading" data-aos="fade-up">
+            <span class="section-kicker">Journey</span>
+            <h2>Education, growth, and where the work is heading.</h2>
+          </div>
 
-                <div class="resume-item">
-                  <h4>BSc CSIT</h4>
-                  <h5>2079 - 2083</h5>
-                  <p><em>NSC, Kathmandu</em></p>
-                  <p>
-                    Continuing to grow in software, web development, and
-                    practical problem solving through academic and self-driven
-                    work.
-                  </p>
-                </div>
+          <div class="resume-layout">
+            <div class="timeline-card panel-card" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="resume-title">Education</h3>
+
+              <div class="resume-item">
+                <h4>+2</h4>
+                <h5>2076 - 2078</h5>
+                <p><em>KMC, Lalitpur</em></p>
+                <p>
+                  Built a strong academic base while developing interest in
+                  technology and digital creation.
+                </p>
+              </div>
+
+              <div class="resume-item">
+                <h4>BSc CSIT</h4>
+                <h5>2079 - 2083</h5>
+                <p><em>NSC, Kathmandu</em></p>
+                <p>
+                  Continuing to grow in software, web development, and
+                  practical problem solving through academic and self-driven
+                  work.
+                </p>
               </div>
             </div>
 
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-              <div class="resume-side-card">
+            <div class="resume-side" data-aos="fade-up" data-aos-delay="180">
+              <article class="panel-card resume-side-card">
                 <h3>Quick Snapshot</h3>
                 <ul class="snapshot-list">
                   <li><strong>Role:</strong> Web Developer / UI Designer</li>
@@ -357,221 +452,215 @@
                   <li><strong>Freelance:</strong> Available</li>
                   <li><strong>Base:</strong> Kathmandu, Nepal</li>
                 </ul>
-                <a href="./assets/cv.pdf.png" class="btn-primary-solid w-100 text-center"
+                <a
+                  href="./assets/cv.pdf.png"
+                  class="btn-primary-solid w-100 text-center"
                   >Download CV</a
                 >
-              </div>
+              </article>
+
+              <article class="panel-card process-card">
+                <h3>How I build</h3>
+                <p>
+                  Clear structure first, visual direction second, and polish
+                  layered in through spacing, motion, and responsiveness.
+                </p>
+              </article>
             </div>
           </div>
         </div>
       </section>
 
       <section id="portfolio" class="portfolio section">
-        <div class="container section-title" data-aos="fade-up">
-          <h2>Selected Work</h2>
-          <p>
-            A small set of work areas that reflect how I approach design and
-            frontend development.
-          </p>
-        </div>
+        <div class="container">
+          <div class="section-heading" data-aos="fade-up">
+            <span class="section-kicker">Selected Work</span>
+            <h2>Projects and services shaped around clean execution.</h2>
+          </div>
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-md-6 col-xl-4">
-              <article class="project-card h-100">
-                <img
-                  src="assets/img/ingg1.jpg"
-                  class="project-image"
-                  alt="Portfolio website project"
-                />
-                <div class="project-body">
-                  <span class="project-tag">Featured</span>
-                  <h3>Personal Portfolio Website</h3>
-                  <p>
-                    A redesigned personal site focused on responsive layout,
-                    stronger visual hierarchy, and direct contact flow.
-                  </p>
-                  <div class="project-tech">
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-                  </div>
-                  <div class="project-links">
-                    <a href="https://github.com/Munalthapa710/portfolio-website">Source</a>
-                    <a href="https://www.munalthapa710.com.np/">Live Site</a>
-                  </div>
+          <div class="project-grid">
+            <article class="project-card" data-aos="fade-up" data-aos-delay="100">
+              <img
+                src="assets/img/munal-portrait-2026.jpg"
+                class="project-image"
+                alt="Munal portfolio feature"
+              />
+              <div class="project-body">
+                <span class="project-tag">Featured</span>
+                <h3>Personal Portfolio Website</h3>
+                <p>
+                  A redesigned personal site focused on stronger visual impact,
+                  custom styling, and direct contact flow.
+                </p>
+                <div class="project-tech">
+                  <span>HTML</span>
+                  <span>CSS</span>
+                  <span>JavaScript</span>
                 </div>
-              </article>
-            </div>
+                <div class="project-links">
+                  <a href="https://github.com/Munalthapa710/portfolio-website">Source</a>
+                  <a href="https://www.munalthapa710.com.np/">Live Site</a>
+                </div>
+              </div>
+            </article>
 
-            <div class="col-md-6 col-xl-4">
-              <article class="project-card h-100">
-                <img
-                  src="assets/img/dailytrack-preview.svg"
-                  class="project-image"
-                  alt="DailyTrack web app preview"
-                />
-                <div class="project-body">
-                  <span class="project-tag">UI / UX</span>
-                  <h3>DailyTrack Web</h3>
-                  <p>
-                    A deployed web app experience focused on day-to-day task
-                    flow, clear structure, and practical usability.
-                  </p>
-                  <div class="project-tech">
-                    <span>Web App</span>
-                    <span>Deployment</span>
-                    <span>UI Flow</span>
-                  </div>
-                  <div class="project-links">
-                    <a href="https://dailytrack-web.onrender.com">Live Site</a>
-                    <a href="#contact">Discuss a project</a>
-                  </div>
+            <article class="project-card" data-aos="fade-up" data-aos-delay="160">
+              <img
+                src="assets/img/dailytrack-preview.svg"
+                class="project-image"
+                alt="DailyTrack web app preview"
+              />
+              <div class="project-body">
+                <span class="project-tag">UI / UX</span>
+                <h3>DailyTrack Web</h3>
+                <p>
+                  A deployed web app experience focused on day-to-day task flow,
+                  clearer structure, and practical usability.
+                </p>
+                <div class="project-tech">
+                  <span>Web App</span>
+                  <span>Deployment</span>
+                  <span>UI Flow</span>
                 </div>
-              </article>
-            </div>
+                <div class="project-links">
+                  <a href="https://dailytrack-web.onrender.com">Live Site</a>
+                  <a href="#contact">Discuss a project</a>
+                </div>
+              </div>
+            </article>
 
-            <div class="col-md-6 col-xl-4">
-              <article class="project-card h-100">
-                <img
-                  src="assets/img/services.jpg"
-                  class="project-image"
-                  alt="Frontend development and design services"
-                />
-                <div class="project-body">
-                  <span class="project-tag">Service Focus</span>
-                  <h3>Frontend Builds for Clients</h3>
-                  <p>
-                    Landing pages and portfolio-style websites built with a
-                    practical emphasis on clarity, speed, and maintainability.
-                  </p>
-                  <div class="project-tech">
-                    <span>Frontend</span>
-                    <span>Responsive QA</span>
-                    <span>Deployment</span>
-                  </div>
-                  <div class="project-links">
-                    <a href="mailto:thapamunal710@gmail.com">Email</a>
-                    <a href="tel:+9779869269374">Call</a>
-                  </div>
+            <article class="project-card" data-aos="fade-up" data-aos-delay="220">
+              <img
+                src="assets/img/services.jpg"
+                class="project-image"
+                alt="Frontend development services"
+              />
+              <div class="project-body">
+                <span class="project-tag">Service Focus</span>
+                <h3>Frontend Builds for Clients</h3>
+                <p>
+                  Landing pages and portfolio websites built with a practical
+                  emphasis on clarity, speed, and maintainability.
+                </p>
+                <div class="project-tech">
+                  <span>Frontend</span>
+                  <span>Responsive QA</span>
+                  <span>Deployment</span>
                 </div>
-              </article>
-            </div>
+                <div class="project-links">
+                  <a href="mailto:thapamunal710@gmail.com">Email</a>
+                  <a href="tel:+9779869269374">Call</a>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
       <section id="contact" class="contact section">
-        <div class="container section-title" data-aos="fade-up">
-          <h2>Contact</h2>
-          <p>
-            If you want a portfolio, landing page, or a cleaner redesign of an
-            existing site, send a message here.
-          </p>
-        </div>
+        <div class="container">
+          <div class="section-heading" data-aos="fade-up">
+            <span class="section-kicker">Contact</span>
+            <h2>Need a portfolio or landing page with stronger presence?</h2>
+          </div>
 
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row gy-4">
-            <div class="col-lg-4">
-              <div class="contact-panel">
-                <div class="info-item d-flex">
-                  <i class="bi bi-geo-alt flex-shrink-0"></i>
-                  <div>
-                    <h3>Address</h3>
-                    <p>Imadol, Lalitpur, Nepal</p>
-                  </div>
+          <div class="contact-layout">
+            <div class="contact-panel panel-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="info-item d-flex">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>Imadol, Lalitpur, Nepal</p>
                 </div>
+              </div>
 
-                <div class="info-item d-flex">
-                  <i class="bi bi-telephone flex-shrink-0"></i>
-                  <div>
-                    <h3>Phone</h3>
-                    <p><a href="tel:+9779869269374">+977 9869269374</a></p>
-                  </div>
+              <div class="info-item d-flex">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Phone</h3>
+                  <p><a href="tel:+9779869269374">+977 9869269374</a></p>
                 </div>
+              </div>
 
-                <div class="info-item d-flex">
-                  <i class="bi bi-envelope flex-shrink-0"></i>
-                  <div>
-                    <h3>Email</h3>
-                    <p>
-                      <a href="mailto:thapamunal710@gmail.com"
-                        >thapamunal710@gmail.com</a
-                      >
-                    </p>
-                  </div>
+              <div class="info-item d-flex">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email</h3>
+                  <p>
+                    <a href="mailto:thapamunal710@gmail.com"
+                      >thapamunal710@gmail.com</a
+                    >
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div class="col-lg-8">
-              <form
-                id="contact-form"
-                class="contact-form"
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <div class="row gy-4">
-                  <div class="col-md-6">
-                    <label class="form-label" for="contactName">Your Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="contactName"
-                      class="form-control"
-                      placeholder="Enter your full name"
-                      required
-                    />
-                  </div>
-
-                  <div class="col-md-6">
-                    <label class="form-label" for="contactEmail">Your Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="contactEmail"
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-
-                  <div class="col-md-12">
-                    <label class="form-label" for="contactSubject">Subject</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="subject"
-                      id="contactSubject"
-                      placeholder="What would you like to build?"
-                      required
-                    />
-                  </div>
-
-                  <div class="col-md-12">
-                    <label class="form-label" for="contactMessage">Message</label>
-                    <textarea
-                      class="form-control"
-                      name="message"
-                      id="contactMessage"
-                      rows="6"
-                      placeholder="Share a few details about your project"
-                      required
-                    ></textarea>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div id="form-status" class="form-status" aria-live="polite"></div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <button type="submit" id="contactSubmit" class="btn-primary-solid">
-                      Send Message
-                    </button>
-                  </div>
+            <form
+              id="contact-form"
+              class="contact-form panel-card"
+              data-aos="fade-up"
+              data-aos-delay="160"
+            >
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <label class="form-label" for="contactName">Your Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="contactName"
+                    class="form-control"
+                    placeholder="Enter your full name"
+                    required
+                  />
                 </div>
-              </form>
-            </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="contactEmail">Your Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    id="contactEmail"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="contactSubject">Subject</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="contactSubject"
+                    placeholder="What would you like to build?"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="contactMessage">Message</label>
+                  <textarea
+                    class="form-control"
+                    name="message"
+                    id="contactMessage"
+                    rows="6"
+                    placeholder="Share a few details about your project"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="col-md-12">
+                  <div id="form-status" class="form-status" aria-live="polite"></div>
+                </div>
+
+                <div class="col-md-12">
+                  <button type="submit" id="contactSubmit" class="btn-primary-solid">
+                    Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </section>
@@ -581,8 +670,8 @@
       <div class="container">
         <h3 class="sitename">Munal Thapa</h3>
         <p>
-          Designing and building responsive digital experiences with clarity and
-          intention.
+          Designing and building responsive digital experiences with stronger
+          visual character.
         </p>
         <div class="social-links d-flex justify-content-center">
           <a href="https://github.com/Munalthapa710"><i class="bi bi-github"></i></a>
@@ -590,13 +679,10 @@
           <a href="https://www.instagram.com/munalthapa710/"><i class="bi bi-instagram"></i></a>
           <a href="https://www.linkedin.com/in/munal-thapa-234647237/"><i class="bi bi-linkedin"></i></a>
         </div>
-        <div class="container">
-          <div class="copyright">
-            <span>Copyright</span>
-            <strong class="px-1 sitename">Munal Thapa</strong>
-            <span>All Rights Reserved</span>
-          </div>
-          <div class="credits">Designed by MT710</div>
+        <div class="copyright">
+          <span>&copy;</span>
+          <span class="px-1">Munal Thapa</span>
+          <span>All Rights Reserved</span>
         </div>
       </div>
     </footer>
@@ -615,10 +701,6 @@
     <script src="assets/vendor/typed.js/typed.umd.js"></script>
     <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
     <script src="assets/js/main.js"></script>
   </body>
