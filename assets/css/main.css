@@ -1060,6 +1060,20 @@ textarea.form-control {
     --section-padding: 84px;
   }
 
+  .hero-shell .row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  .hero-shell .row > [class*="col-"]:first-child {
+    width: 58%;
+  }
+
+  .hero-shell .row > [class*="col-"]:last-child {
+    width: 42%;
+  }
+
   .header {
     left: -100%;
     width: min(320px, 100%);
@@ -1138,8 +1152,8 @@ textarea.form-control {
   }
 
   .hero-visual {
-    max-width: 300px;
-    margin: 20px auto 0;
+    max-width: 180px;
+    margin: 8px 0 0 auto;
   }
 
   .hero-ticker {
@@ -1167,6 +1181,14 @@ textarea.form-control {
 }
 
 @media (max-width: 480px) {
+  .hero-shell .row > [class*="col-"]:first-child {
+    width: 60%;
+  }
+
+  .hero-shell .row > [class*="col-"]:last-child {
+    width: 40%;
+  }
+
   .hero {
     padding-top: 78px;
   }
