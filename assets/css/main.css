@@ -1060,8 +1060,50 @@ textarea.form-control {
     --section-padding: 84px;
   }
 
+  .header {
+    width: 100%;
+    padding: 82px 20px 24px;
+  }
+
+  .header-toggle {
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+  }
+
   .section-heading {
     margin-bottom: 36px;
+  }
+
+  .hero {
+    padding-top: 92px;
+  }
+
+  .hero-copy {
+    max-width: none;
+    text-align: center;
+  }
+
+  .hero-intro,
+  .hero-kicker {
+    letter-spacing: 0.16em;
+  }
+
+  .hero-lead {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+  }
+
+  .hero-role,
+  .social-links,
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-actions a {
+    width: 100%;
   }
 
   .panel-card,
@@ -1083,6 +1125,18 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 
+  .hero-meta-card {
+    padding: 20px;
+  }
+
+  .social-links {
+    flex-wrap: wrap;
+  }
+
+  .hero-visual {
+    max-width: 360px;
+  }
+
   .portrait-frame {
     transform: none;
   }
@@ -1098,5 +1152,39 @@ textarea.form-control {
 
   .ticker-track span {
     font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 88px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 16vw, 4.4rem);
+  }
+
+  .hero-actions {
+    gap: 12px;
+  }
+
+  .btn-primary-solid,
+  .btn-secondary-ghost {
+    width: 100%;
+    padding: 0 18px;
+  }
+
+  .project-body,
+  .skills-card,
+  .strengths-card,
+  .quote-card,
+  .timeline-card,
+  .resume-side-card,
+  .process-card,
+  .contact-panel,
+  .contact-form,
+  .about-story,
+  .about-details {
+    padding: 22px;
   }
 }
