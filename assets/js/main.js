@@ -26,8 +26,8 @@
   /**
    * Hide mobile nav on same-page/hash links
    */
-  document.querySelectorAll("#navmenu a").forEach((navmenu) => {
-    navmenu.addEventListener("click", () => {
+  document.querySelectorAll("#navmenu a, .mobile-bottom-nav a").forEach((navmenuLink) => {
+    navmenuLink.addEventListener("click", () => {
       if (document.querySelector(".header-show")) {
         headerToggle();
       }
@@ -235,7 +235,7 @@
   /**
    * Navmenu Scrollspy
    */
-  let navmenulinks = document.querySelectorAll(".navmenu a");
+  let navmenulinks = document.querySelectorAll(".navmenu a, .mobile-bottom-nav a");
 
   function navmenuScrollspy() {
     navmenulinks.forEach((navmenulink) => {

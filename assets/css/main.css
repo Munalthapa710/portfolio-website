@@ -171,6 +171,10 @@ img {
   margin-left: 110px;
 }
 
+.mobile-bottom-nav {
+  display: none;
+}
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -1060,6 +1064,10 @@ textarea.form-control {
     --section-padding: 84px;
   }
 
+  body {
+    padding-bottom: 92px;
+  }
+
   .header {
     left: -100%;
     width: min(320px, 100%);
@@ -1145,6 +1153,48 @@ textarea.form-control {
     display: none;
   }
 
+  .mobile-bottom-nav {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 1000;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    background: rgba(12, 15, 22, 0.9);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+  }
+
+  .mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 60px;
+    padding: 8px 4px;
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .mobile-bottom-nav a i {
+    font-size: 1rem;
+  }
+
+  .mobile-bottom-nav a.active {
+    color: var(--contrast-color);
+    background: linear-gradient(135deg, rgba(255, 122, 24, 0.28), rgba(255, 77, 109, 0.28));
+  }
+
   .portrait-frame {
     transform: none;
     padding: 14px;
@@ -1173,6 +1223,19 @@ textarea.form-control {
   .hero h1 {
     font-size: clamp(2.8rem, 14vw, 4rem);
     line-height: 0.94;
+  }
+
+  .mobile-bottom-nav {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .mobile-bottom-nav a {
+    min-height: 56px;
+    font-size: 0.62rem;
   }
 
   .hero-role {
