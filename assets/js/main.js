@@ -282,7 +282,6 @@
     if (!contactForm) return;
 
     const payload = {
-      to_name: "Munal Thapa",
       from_name: document.querySelector("#contactName")?.value.trim(),
       from_email: document.querySelector("#contactEmail")?.value.trim(),
       subject: document.querySelector("#contactSubject")?.value.trim(),
@@ -306,26 +305,29 @@
     setFormStatus("loading", "Sending your message...");
 
     try {
-      if (!window.emailjs) {
-        throw new Error("EmailJS failed to load.");
-      }
-
-      window.emailjs.init({
-        publicKey: "2Aa4h-Hp6C82KBjZi",
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
-      await window.emailjs.send(
-        "service_6qwhgkr",
-        "template_q5jtmvf",
-        payload
-      );
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          result?.message || "Message could not be sent right now."
+        );
+      }
 
       contactForm.reset();
       setFormStatus("success", "Message sent successfully. I will get back to you soon.");
     } catch (error) {
       setFormStatus(
         "error",
-        "Message could not be sent right now. Please email thapamunal710@gmail.com directly."
+        error?.message ||
+          "Message could not be sent right now. Please email thapamunal710@gmail.com directly."
       );
       console.error("Contact form error:", error);
     } finally {
