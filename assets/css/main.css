@@ -749,6 +749,12 @@ img {
   background: rgba(255, 255, 255, 0.06);
 }
 
+.project-image-contain {
+  object-fit: contain;
+  padding: 12px;
+  background: #f4f7fb;
+}
+
 .project-body {
   padding: 28px;
 }
