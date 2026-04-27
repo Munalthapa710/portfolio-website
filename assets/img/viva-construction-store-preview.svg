@@ -1,0 +1,121 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="540" fill="#f4f7fb"/>
+  <rect width="162" height="540" fill="#eef7f1"/>
+  <rect x="162" width="1" height="540" fill="#d7e3ed"/>
+  <circle cx="30" cy="32" r="18" fill="#55ace8"/>
+  <path d="M30 18v28M20 43l10-25 10 25M22 30h16" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="58" y="38" fill="#06122a" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">Viva Store's</text>
+  <rect x="18" y="82" width="126" height="34" rx="8" fill="#e6eefb"/>
+  <rect x="26" y="90" width="18" height="18" rx="5" fill="#d8e5ff"/>
+  <text x="54" y="104" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Dashboard</text>
+  <g fill="#163252" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="600">
+    <text x="54" y="146">Exceptions</text>
+    <text x="54" y="188">Approvals</text>
+    <text x="54" y="230">Users</text>
+    <text x="54" y="272">Stores</text>
+    <text x="54" y="314">Warehouse</text>
+    <text x="54" y="356">Communication</text>
+    <text x="54" y="398">Report</text>
+    <text x="54" y="440">Settings</text>
+  </g>
+  <g stroke="#668099" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 142h9l-4.5-8-4.5 8z"/>
+    <rect x="30" y="180" width="9" height="11" rx="2"/>
+    <path d="M32 183l2 2 4-4"/>
+    <circle cx="33" cy="222" r="3"/>
+    <circle cx="39" cy="222" r="3"/>
+    <path d="M29 232c0-4 8-4 8 0M36 232c0-3 7-3 7 0"/>
+    <path d="M30 264h10v10H30zM32 264v-4h6v4"/>
+    <path d="M30 306h12v10H30zM32 306l4-4 4 4"/>
+    <path d="M30 348h11v8H30zM30 356v4"/>
+    <path d="M30 390v9M35 394v5M40 386v13M28 399h15"/>
+    <circle cx="35" cy="432" r="5"/>
+    <path d="M35 424v3M35 437v3M27 432h3M40 432h3"/>
+  </g>
+  <rect x="162" y="0" width="798" height="62" fill="#ffffff"/>
+  <rect x="162" y="61" width="798" height="1" fill="#d7e3ed"/>
+  <text x="188" y="38" fill="#06122a" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Welcome Admin</text>
+  <rect x="884" y="16" width="28" height="28" rx="8" fill="#fbfcfe" stroke="#d6e1ec"/>
+  <rect x="920" y="16" width="28" height="28" rx="8" fill="#fbfcfe" stroke="#d6e1ec"/>
+  <g transform="translate(188 78)">
+    <g>
+      <rect width="120" height="160" rx="12" fill="#fff" stroke="#cfdae5"/>
+      <text x="12" y="24" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2">TOTAL ITEMS</text>
+      <text x="12" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">10</text>
+      <text x="12" y="84" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">Warehouse item</text>
+      <text x="12" y="105" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">lines currently</text>
+      <text x="12" y="126" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Open warehouse</text>
+      <rect x="82" y="18" width="28" height="28" rx="9" fill="#edf4ff" stroke="#d8e5ff"/>
+    </g>
+    <g transform="translate(134 0)">
+      <rect width="120" height="160" rx="12" fill="#fff" stroke="#cfdae5"/>
+      <text x="12" y="24" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2">TOTAL USERS</text>
+      <text x="12" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">11</text>
+      <text x="12" y="84" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">Combined admin,</text>
+      <text x="12" y="105" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">store, and user</text>
+      <text x="12" y="126" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Open users</text>
+      <rect x="82" y="18" width="28" height="28" rx="9" fill="#f7fbff" stroke="#d8e1ee"/>
+    </g>
+    <g transform="translate(268 0)">
+      <rect width="120" height="160" rx="12" fill="#fff" stroke="#cfdae5"/>
+      <text x="12" y="24" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2">LOW STOCK</text>
+      <text x="12" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">2</text>
+      <text x="12" y="84" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">Items at or below</text>
+      <text x="12" y="105" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">configured threshold.</text>
+      <text x="12" y="126" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Review stock</text>
+      <rect x="82" y="18" width="28" height="28" rx="9" fill="#fff0f0" stroke="#ffd6d6"/>
+    </g>
+    <g transform="translate(402 0)">
+      <rect width="120" height="160" rx="12" fill="#fff" stroke="#cfdae5"/>
+      <text x="12" y="24" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2">APPROVALS</text>
+      <text x="12" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">0</text>
+      <text x="12" y="84" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">High-impact requests</text>
+      <text x="12" y="105" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">waiting for admin.</text>
+      <text x="12" y="126" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Open approvals</text>
+      <rect x="82" y="18" width="28" height="28" rx="9" fill="#edf4ff" stroke="#d8e5ff"/>
+    </g>
+    <g transform="translate(536 0)">
+      <rect width="120" height="160" rx="12" fill="#fff" stroke="#cfdae5"/>
+      <text x="12" y="24" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2">ACTIVITY</text>
+      <text x="12" y="58" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">6</text>
+      <text x="12" y="84" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">Latest stock</text>
+      <text x="12" y="105" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="10">movements recorded.</text>
+      <text x="12" y="126" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="700">Jump to records</text>
+      <rect x="82" y="18" width="28" height="28" rx="9" fill="#eafbf2" stroke="#c5f2d8"/>
+    </g>
+  </g>
+  <g transform="translate(188 270)">
+    <rect width="430" height="205" rx="12" fill="#fff" stroke="#cfdae5"/>
+    <text x="14" y="28" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="2">ADMIN ACTIONS</text>
+    <text x="14" y="55" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800">Operational shortcuts</text>
+    <text x="14" y="78" fill="#62738e" font-family="Inter, Arial, sans-serif" font-size="10">162 total warehouse units are currently tracked.</text>
+    <g transform="translate(14 102)">
+      <rect width="124" height="82" rx="10" fill="#fff" stroke="#d5e0ea"/>
+      <text x="14" y="34" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">Approval queue</text>
+      <text x="14" y="56" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="9">Review stock changes</text>
+    </g>
+    <g transform="translate(152 102)">
+      <rect width="124" height="82" rx="10" fill="#fff" stroke="#d5e0ea"/>
+      <text x="14" y="34" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">Exception center</text>
+      <text x="14" y="56" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="9">Triage reorder risk</text>
+    </g>
+    <g transform="translate(290 102)">
+      <rect width="124" height="82" rx="10" fill="#fff" stroke="#d5e0ea"/>
+      <text x="14" y="34" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="800">Warehouse</text>
+      <text x="14" y="56" fill="#52657e" font-family="Inter, Arial, sans-serif" font-size="9">Adjust quantities</text>
+    </g>
+  </g>
+  <g transform="translate(632 270)">
+    <rect width="290" height="205" rx="12" fill="#fff" stroke="#cfdae5"/>
+    <text x="16" y="28" fill="#145cff" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="2">PRIORITY WATCH</text>
+    <text x="16" y="55" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800">Restock needed</text>
+    <rect x="16" y="92" width="258" height="56" rx="10" fill="#fff9ea" stroke="#f5c945"/>
+    <text x="36" y="121" fill="#1f2937" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800">Drill Machine 5KW</text>
+    <rect x="226" y="104" width="38" height="16" rx="8" fill="#fff2bf"/>
+    <text x="233" y="116" fill="#d97706" font-family="Inter, Arial, sans-serif" font-size="8" font-weight="800">Low</text>
+    <rect x="16" y="158" width="258" height="56" rx="10" fill="#fff9ea" stroke="#f5c945"/>
+    <text x="36" y="187" fill="#1f2937" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="800">Concrete Mixer</text>
+    <rect x="226" y="170" width="38" height="16" rx="8" fill="#fff2bf"/>
+    <text x="233" y="182" fill="#d97706" font-family="Inter, Arial, sans-serif" font-size="8" font-weight="800">Low</text>
+  </g>
+</svg>
