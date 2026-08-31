@@ -7,8 +7,14 @@ module.exports = async function handler(request, response) {
   }
 
   try {
-    const content = await readJsonFile(CONTENT_PATH);
-    response.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=300");
+    // Public traffic should use the deployment bundle and avoid a GitHub round trip.
+    let content;
+    try {
+      content = localJson(CONTENT_PATH);
+    } catch (localError) {
+      content = await readJsonFile(CONTENT_PATH);
+    }
+    response.setHeader("Cache-Control", "public, max-age=60, s-maxage=60, stale-while-revalidate=300");
     return json(response, 200, content);
   } catch (error) {
     console.error("Remote content unavailable:", error);
