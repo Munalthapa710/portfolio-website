@@ -302,7 +302,6 @@
   }
 
   function bindAnalytics() {
-    track("view", document.title);
     document.addEventListener("click", (event) => {
       const link = event.target.closest("a");
       if (!link) return;
