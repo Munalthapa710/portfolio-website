@@ -29,7 +29,7 @@
     }
 
     try {
-      const response = await fetch("/api/content");
+      const response = await fetch("/data/site-content.json");
       if (!response.ok) throw new Error("Content request failed");
       return response.json();
     } catch (error) {
