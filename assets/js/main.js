@@ -6,8 +6,228 @@
  * License: https://bootstrapmade.com/license/
  */
 
-(function () {
+(async function () {
   "use strict";
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  async function loadSiteContent() {
+    try {
+      const response = await fetch("/api/content", { cache: "no-store" });
+      if (!response.ok) throw new Error("Content request failed");
+      return response.json();
+    } catch (error) {
+      console.warn("Using embedded portfolio content.", error);
+      return null;
+    }
+  }
+
+  function setText(selector, value) {
+    const element = document.querySelector(selector);
+    if (element && value !== undefined) element.textContent = value;
+  }
+
+  function setLink(selector, url, label) {
+    const element = document.querySelector(selector);
+    if (!element) return;
+    if (url !== undefined) element.href = url;
+    if (label !== undefined) element.textContent = label;
+  }
+
+  function renderSocials(socials) {
+    if (!Array.isArray(socials)) return;
+    const html = socials
+      .map(
+        (social) =>
+          `<a href="${escapeHtml(social.url)}" aria-label="${escapeHtml(social.label)}"><i class="bi ${escapeHtml(social.icon)}"></i></a>`
+      )
+      .join("");
+
+    document.querySelectorAll(".social-links").forEach((container) => {
+      container.innerHTML = html;
+    });
+  }
+
+  function renderHero(content) {
+    if (!content?.hero || !content?.profile) return;
+    const heroTitle = document.querySelector(".hero-copy h1");
+    if (heroTitle) {
+      heroTitle.innerHTML = `${escapeHtml(content.profile.firstName)} <span>${escapeHtml(content.profile.lastName)}</span>`;
+    }
+
+    const typed = document.querySelector(".typed");
+    if (typed && Array.isArray(content.hero.roles)) {
+      typed.setAttribute("data-typed-items", content.hero.roles.join(","));
+    }
+
+    setLink(".hero-actions .btn-primary-solid", content.hero.primaryAction?.url, content.hero.primaryAction?.label);
+    setLink(".hero-actions .btn-secondary-ghost", content.hero.secondaryAction?.url, content.hero.secondaryAction?.label);
+
+    const meta = document.querySelector(".hero-meta");
+    if (meta && Array.isArray(content.hero.metaCards)) {
+      meta.innerHTML = content.hero.metaCards
+        .map(
+          (card) =>
+            `<div class="hero-meta-card"><span class="meta-label">${escapeHtml(card.label)}</span><strong>${escapeHtml(card.value)}</strong></div>`
+        )
+        .join("");
+    }
+
+    const portrait = document.querySelector(".portrait-frame img");
+    if (portrait) {
+      portrait.src = content.profile.portrait;
+      portrait.alt = `${content.profile.siteName} portrait`;
+    }
+
+    const ticker = document.querySelector(".ticker-track");
+    if (ticker && Array.isArray(content.hero.ticker)) {
+      const items = [...content.hero.ticker, ...content.hero.ticker];
+      ticker.innerHTML = items.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+    }
+  }
+
+  function renderAbout(content) {
+    if (!content?.about) return;
+    setText(".about-story .story-lead", content.about.lead);
+    setText(".about-story p:not(.story-lead)", content.about.body);
+
+    const details = document.querySelector(".about-details");
+    if (details && Array.isArray(content.about.details)) {
+      details.innerHTML = content.about.details
+        .map((item) => `<div class="detail-row"><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(item.value)}</strong></div>`)
+        .join("");
+    }
+
+    const focusGrid = document.querySelector(".focus-grid");
+    if (focusGrid && Array.isArray(content.about.focus)) {
+      focusGrid.innerHTML = content.about.focus
+        .map(
+          (item) =>
+            `<article class="focus-card"><i class="bi ${escapeHtml(item.icon)}"></i><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></article>`
+        )
+        .join("");
+    }
+  }
+
+  function renderSkills(content) {
+    if (!content?.skills) return;
+    setText(".skills-card h3", content.skills.coreTitle);
+
+    const skills = document.querySelector(".skills-content");
+    if (skills && Array.isArray(content.skills.items)) {
+      skills.innerHTML = content.skills.items
+        .map((item) => {
+          const level = Math.max(0, Math.min(100, Number(item.level) || 0));
+          return `<div class="progress"><span class="skill"><span>${escapeHtml(item.name)}</span> <i class="val">${level}%</i></span><div class="progress-bar-wrap"><div class="progress-bar" role="progressbar" aria-valuenow="${level}" aria-valuemin="0" aria-valuemax="100"></div></div></div>`;
+        })
+        .join("");
+    }
+
+    setText(".strengths-card h3", content.skills.strengthsTitle);
+    const strengths = document.querySelector(".skill-chip-grid");
+    if (strengths && Array.isArray(content.skills.strengths)) {
+      strengths.innerHTML = content.skills.strengths.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+    }
+    setText(".quote-card p", content.skills.quote);
+  }
+
+  function renderResume(content) {
+    if (!content?.resume) return;
+    const timeline = document.querySelector(".timeline-card");
+    if (timeline) {
+      const experiences = (content.resume.experiences || [])
+        .map(
+          (item) =>
+            `<div class="experience-item"><div class="experience-logo"><img src="${escapeHtml(item.logo)}" alt="${escapeHtml(item.company)} logo" /></div><div class="experience-content"><h4>${escapeHtml(item.role)}</h4><h5>${escapeHtml(item.period)}</h5><p><em>${escapeHtml(item.company)}</em></p><p>${escapeHtml(item.description)}</p></div></div>`
+        )
+        .join("");
+      const education = (content.resume.education || [])
+        .map(
+          (item) =>
+            `<div class="resume-item"><h4>${escapeHtml(item.title)}</h4><h5>${escapeHtml(item.period)}</h5><p><em>${escapeHtml(item.place)}</em></p><p>${escapeHtml(item.description)}</p></div>`
+        )
+        .join("");
+      timeline.innerHTML = `<h3 class="resume-title">Experience</h3>${experiences}<h3 class="resume-title">Education</h3>${education}`;
+    }
+
+    const snapshot = document.querySelector(".snapshot-list");
+    if (snapshot && Array.isArray(content.resume.snapshot)) {
+      snapshot.innerHTML = content.resume.snapshot
+        .map((item) => `<li><strong>${escapeHtml(item.label)}:</strong> ${escapeHtml(item.value)}</li>`)
+        .join("");
+    }
+    setLink(".resume-side-card .btn-primary-solid", content.profile?.cv, "Download CV");
+    setText(".process-card h3", content.resume.processTitle);
+    setText(".process-card p", content.resume.process);
+  }
+
+  function projectCard(project, index) {
+    const tech = (project.tech || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+    const links = (project.links || []).map((link) => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`).join("");
+    const delay = 100 + index * 60;
+    const imageClass = `project-image${project.imageClass ? ` ${escapeHtml(project.imageClass)}` : ""}`;
+
+    return `<article class="project-card" data-aos="fade-up" data-aos-delay="${delay}"><img src="${escapeHtml(project.image)}" class="${imageClass}" alt="${escapeHtml(project.imageAlt || project.title)}" /><div class="project-body"><span class="project-tag">${escapeHtml(project.tag)}</span><h3>${escapeHtml(project.title)}</h3><p>${escapeHtml(project.description)}</p><div class="project-tech">${tech}</div><div class="project-links">${links}</div></div></article>`;
+  }
+
+  function renderProjects(content) {
+    if (!content?.projects) return;
+    const grids = document.querySelectorAll(".portfolio .project-grid");
+    if (grids[0] && Array.isArray(content.projects.main)) {
+      grids[0].innerHTML = content.projects.main.map(projectCard).join("");
+    }
+    setText(".freelance-heading .section-kicker", content.projects.freelanceTitle);
+    if (grids[1] && Array.isArray(content.projects.freelance)) {
+      grids[1].innerHTML = content.projects.freelance.map(projectCard).join("");
+    }
+  }
+
+  function renderContact(content) {
+    if (!content?.contact) return;
+    const items = document.querySelectorAll(".contact-panel .info-item");
+    if (items[0]) items[0].querySelector("p").textContent = content.contact.address;
+    if (items[1]) {
+      const phone = items[1].querySelector("a");
+      phone.href = content.contact.phoneLink;
+      phone.textContent = content.contact.phone;
+    }
+    if (items[2]) {
+      const email = items[2].querySelector("a");
+      email.href = content.contact.emailLink;
+      email.textContent = content.contact.email;
+    }
+    setText(".footer .sitename", content.profile?.siteName);
+    setText(".footer p", content.contact.footerText);
+    setText(".copyright .px-1", content.profile?.siteName);
+  }
+
+  function renderMeta(content) {
+    if (!content?.meta) return;
+    document.title = content.meta.title || document.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", content.meta.description || "");
+    document.querySelector('meta[name="keywords"]')?.setAttribute("content", content.meta.keywords || "");
+  }
+
+  function renderSiteContent(content) {
+    if (!content) return;
+    renderMeta(content);
+    renderHero(content);
+    renderSocials(content.socials);
+    renderAbout(content);
+    renderSkills(content);
+    renderResume(content);
+    renderProjects(content);
+    renderContact(content);
+  }
+
+  renderSiteContent(await loadSiteContent());
 
   /**
    * Header toggle
