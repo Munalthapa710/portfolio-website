@@ -154,7 +154,7 @@
       const experiences = (content.resume.experiences || [])
         .map(
           (item) =>
-            `<div class="experience-item"><div class="experience-logo"><img src="${escapeHtml(item.logo)}" alt="${escapeHtml(item.company)} logo" /></div><div class="experience-content"><h4>${escapeHtml(item.role)}</h4><h5>${escapeHtml(item.period)}</h5><p><em>${escapeHtml(item.company)}</em></p><p>${escapeHtml(item.description)}</p></div></div>`
+            `<div class="experience-item"><div class="experience-logo"><img src="${escapeHtml(item.logo)}" loading="lazy" alt="${escapeHtml(item.company)} logo" /></div><div class="experience-content"><h4>${escapeHtml(item.role)}</h4><h5>${escapeHtml(item.period)}</h5><p><em>${escapeHtml(item.company)}</em></p><p>${escapeHtml(item.description)}</p></div></div>`
         )
         .join("");
       const education = (content.resume.education || [])
@@ -183,7 +183,7 @@
     const delay = 100 + index * 60;
     const imageClass = `project-image${project.imageClass ? ` ${escapeHtml(project.imageClass)}` : ""}`;
 
-    return `<article class="project-card" data-aos="fade-up" data-aos-delay="${delay}"><img src="${escapeHtml(project.image)}" class="${imageClass}" alt="${escapeHtml(project.imageAlt || project.title)}" /><div class="project-body"><span class="project-tag">${escapeHtml(project.tag)}</span><h3>${escapeHtml(project.title)}</h3><p>${escapeHtml(project.description)}</p><div class="project-tech">${tech}</div><div class="project-links">${links}</div></div></article>`;
+    return `<article class="project-card" data-aos="fade-up" data-aos-delay="${delay}"><img src="${escapeHtml(project.image)}" loading="lazy" class="${imageClass}" alt="${escapeHtml(project.imageAlt || project.title)}" /><div class="project-body"><span class="project-tag">${escapeHtml(project.tag)}</span><h3>${escapeHtml(project.title)}</h3><p>${escapeHtml(project.description)}</p><div class="project-tech">${tech}</div><div class="project-links">${links}</div></div></article>`;
   }
 
   function renderProjects(content) {
