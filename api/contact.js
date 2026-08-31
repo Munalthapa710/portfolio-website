@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const { STATE_PATH, readJsonFile, writeJsonFile, hasGitHubConfig } = require("./_admin-utils");
 
 const DEFAULT_TO_EMAIL = "thapamunal710@gmail.com";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,39 +54,6 @@ function json(res, statusCode, payload) {
   res.end(JSON.stringify(payload));
 }
 
-async function verifyTurnstile(token, ip) {
-  if (!process.env.TURNSTILE_SECRET_KEY) return true;
-  if (!token) return false;
-
-  const form = new URLSearchParams();
-  form.append("secret", process.env.TURNSTILE_SECRET_KEY);
-  form.append("response", token);
-  if (ip) form.append("remoteip", ip);
-
-  const result = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    body: form
-  });
-  const payload = await result.json().catch(() => ({}));
-  return Boolean(payload.success);
-}
-
-async function recordMessage(message) {
-  if (!hasGitHubConfig()) return;
-
-  try {
-    const state = await readJsonFile(STATE_PATH);
-    state.messages = [message, ...(state.messages || [])].slice(0, 200);
-    state.activity = [
-      { type: "message", message: `New message from ${message.name}`, at: new Date().toISOString() },
-      ...(state.activity || [])
-    ].slice(0, 100);
-    await writeJsonFile(STATE_PATH, state, "Record portfolio contact message");
-  } catch (error) {
-    console.error("Could not record contact message:", error);
-  }
-}
-
 module.exports = async (req, res) => {
   if (req.method === "OPTIONS") {
     res.statusCode = 204;
@@ -112,18 +78,19 @@ module.exports = async (req, res) => {
   const fromEmail =
     process.env.CONTACT_FROM_EMAIL || smtpUser || DEFAULT_TO_EMAIL;
 
+  if (!smtpHost || !smtpUser || !smtpPass) {
+    json(res, 500, {
+      message: "SMTP is not configured on the server yet.",
+    });
+    return;
+  }
+
   try {
     const body = await readJsonBody(req);
-    if (body.website) {
-      json(res, 200, { message: "Message sent successfully." });
-      return;
-    }
-
     const fromName = sanitizeHeaderValue(body.from_name);
     const fromEmailInput = sanitizeValue(body.from_email).toLowerCase();
     const subject = sanitizeHeaderValue(body.subject);
     const message = sanitizeValue(body.message);
-    const turnstileToken = sanitizeValue(body.turnstileToken);
     const safeFromName = escapeHtml(fromName);
     const safeFromEmail = escapeHtml(fromEmailInput);
     const safeSubject = escapeHtml(subject);
@@ -136,29 +103,6 @@ module.exports = async (req, res) => {
 
     if (!EMAIL_PATTERN.test(fromEmailInput)) {
       json(res, 400, { message: "Please enter a valid email address." });
-      return;
-    }
-
-    const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
-    if (!(await verifyTurnstile(turnstileToken, ip))) {
-      json(res, 400, { message: "Spam check failed. Please try again." });
-      return;
-    }
-
-    await recordMessage({
-      id: `${Date.now()}`,
-      name: fromName,
-      email: fromEmailInput,
-      subject,
-      message,
-      createdAt: new Date().toISOString(),
-      read: false
-    });
-
-    if (!smtpHost || !smtpUser || !smtpPass) {
-      json(res, 200, {
-        message: "Message received. Email delivery is not configured yet.",
-      });
       return;
     }
 
@@ -195,16 +139,6 @@ module.exports = async (req, res) => {
         </div>
       `,
     });
-
-    if (process.env.CONTACT_AUTO_REPLY !== "false") {
-      await transporter.sendMail({
-        from: fromEmail,
-        to: fromEmailInput,
-        subject: "Thanks for contacting Munal Thapa",
-        text: "Thanks for your message. I received it and will get back to you soon.",
-        html: '<div style="font-family: Arial, sans-serif; color: #111827; line-height: 1.6;"><h2>Thanks for reaching out.</h2><p>I received your message and will get back to you soon.</p></div>',
-      });
-    }
 
     json(res, 200, { message: "Message sent successfully." });
   } catch (error) {
