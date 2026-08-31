@@ -19,6 +19,15 @@
   }
 
   async function loadSiteContent() {
+    const preview = new URLSearchParams(window.location.search).get("adminPreview");
+    if (preview === "1") {
+      try {
+        return JSON.parse(localStorage.getItem("portfolio_preview_content") || "null");
+      } catch (error) {
+        console.warn("Preview content is invalid.", error);
+      }
+    }
+
     try {
       const response = await fetch("/api/content", { cache: "no-store" });
       if (!response.ok) throw new Error("Content request failed");
@@ -181,11 +190,14 @@
     if (!content?.projects) return;
     const grids = document.querySelectorAll(".portfolio .project-grid");
     if (grids[0] && Array.isArray(content.projects.main)) {
-      grids[0].innerHTML = content.projects.main.map(projectCard).join("");
+      grids[0].innerHTML = published(content.projects.main)
+        .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+        .map(projectCard)
+        .join("");
     }
     setText(".freelance-heading .section-kicker", content.projects.freelanceTitle);
     if (grids[1] && Array.isArray(content.projects.freelance)) {
-      grids[1].innerHTML = content.projects.freelance.map(projectCard).join("");
+      grids[1].innerHTML = published(content.projects.freelance).map(projectCard).join("");
     }
   }
 
@@ -213,21 +225,111 @@
     document.title = content.meta.title || document.title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", content.meta.description || "");
     document.querySelector('meta[name="keywords"]')?.setAttribute("content", content.meta.keywords || "");
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", content.meta.title || "");
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", content.meta.description || "");
+    document.querySelector('meta[property="og:image"]')?.setAttribute("content", content.meta.ogImage || "");
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", content.meta.siteUrl || window.location.href);
+  }
+
+  function published(items) {
+    return (items || []).filter((item) => item.isPublished !== false);
+  }
+
+  function renderTheme(content) {
+    if (!content?.theme) return;
+    const root = document.documentElement;
+    if (content.theme.accentColor) root.style.setProperty("--accent-color", content.theme.accentColor);
+    if (content.theme.accentSecondary) root.style.setProperty("--accent-secondary", content.theme.accentSecondary);
+    document.body.classList.toggle("light-theme", content.theme.mode === "light");
+  }
+
+  function ensureDynamicSection(id, beforeSelector = "#contact") {
+    let section = document.querySelector(`#${id}`);
+    if (section) return section;
+    section = document.createElement("section");
+    section.id = id;
+    section.className = `${id} section dynamic-section`;
+    const before = document.querySelector(beforeSelector);
+    before?.parentNode?.insertBefore(section, before);
+    return section;
+  }
+
+  function renderServices(content) {
+    const services = published(content?.services?.items);
+    const section = ensureDynamicSection("services");
+    if (!services.length) {
+      section.hidden = true;
+      return;
+    }
+    section.hidden = false;
+    section.innerHTML = `<div class="container"><div class="section-heading" data-aos="fade-up"><span class="section-kicker">${escapeHtml(content.services.title || "Services")}</span></div><div class="dynamic-card-grid">${services
+      .map((item) => `<article class="dynamic-card panel-card" data-aos="fade-up"><i class="bi ${escapeHtml(item.icon || "bi-star")}"></i><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p>${item.price ? `<strong>${escapeHtml(item.price)}</strong>` : ""}</article>`)
+      .join("")}</div></div>`;
+  }
+
+  function renderTestimonials(content) {
+    const testimonials = published(content?.testimonials?.items);
+    const section = ensureDynamicSection("testimonials");
+    if (!testimonials.length) {
+      section.hidden = true;
+      return;
+    }
+    section.hidden = false;
+    section.innerHTML = `<div class="container"><div class="section-heading" data-aos="fade-up"><span class="section-kicker">${escapeHtml(content.testimonials.title || "Testimonials")}</span></div><div class="dynamic-card-grid">${testimonials
+      .map((item) => `<article class="dynamic-card panel-card" data-aos="fade-up"><p>${escapeHtml(item.quote)}</p><h3>${escapeHtml(item.name)}</h3><span>${escapeHtml(item.role || "")}</span></article>`)
+      .join("")}</div></div>`;
+  }
+
+  function renderBlog(content) {
+    const posts = published(content?.blog?.items);
+    const section = ensureDynamicSection("blog");
+    if (!posts.length) {
+      section.hidden = true;
+      return;
+    }
+    section.hidden = false;
+    section.innerHTML = `<div class="container"><div class="section-heading" data-aos="fade-up"><span class="section-kicker">${escapeHtml(content.blog.title || "Notes")}</span></div><div class="dynamic-card-grid">${posts
+      .map((item) => `<article class="dynamic-card panel-card" data-aos="fade-up"><span>${escapeHtml(item.date || "")}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.excerpt)}</p><a href="${escapeHtml(item.url || "#contact")}">Read more</a></article>`)
+      .join("")}</div></div>`;
+  }
+
+  function track(type, label) {
+    fetch("/api/analytics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, label, path: window.location.pathname })
+    }).catch(() => {});
+  }
+
+  function bindAnalytics() {
+    track("view", document.title);
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest("a");
+      if (!link) return;
+      if (link.href.includes("Munal_CV") || link.hasAttribute("download")) track("cv_download", link.textContent.trim());
+      if (link.href.includes("#contact") || link.href.startsWith("mailto:") || link.href.startsWith("tel:")) track("contact_click", link.textContent.trim());
+      if (link.closest(".project-card")) track("project_click", link.textContent.trim());
+    });
   }
 
   function renderSiteContent(content) {
     if (!content) return;
     renderMeta(content);
+    renderTheme(content);
     renderHero(content);
     renderSocials(content.socials);
     renderAbout(content);
     renderSkills(content);
     renderResume(content);
     renderProjects(content);
+    renderServices(content);
+    renderTestimonials(content);
+    renderBlog(content);
     renderContact(content);
   }
 
   renderSiteContent(await loadSiteContent());
+  bindAnalytics();
 
   /**
    * Header toggle
@@ -506,6 +608,7 @@
       from_email: document.querySelector("#contactEmail")?.value.trim(),
       subject: document.querySelector("#contactSubject")?.value.trim(),
       message: document.querySelector("#contactMessage")?.value.trim(),
+      website: document.querySelector("#contactWebsite")?.value.trim(),
     };
 
     if (

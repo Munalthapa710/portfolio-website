@@ -2,18 +2,28 @@
   "use strict";
 
   const sections = [
+    ["overview", "Overview", "bi-bar-chart"],
     ["basics", "Basics", "bi-person-badge"],
     ["hero", "Hero", "bi-house"],
     ["about", "About", "bi-info-circle"],
     ["skills", "Skills", "bi-stars"],
     ["resume", "Resume", "bi-file-earmark-text"],
     ["projects", "Projects", "bi-grid"],
+    ["services", "Services", "bi-layers"],
+    ["testimonials", "Testimonials", "bi-chat-square-quote"],
+    ["blog", "Blog", "bi-journal-text"],
     ["contact", "Contact", "bi-envelope"],
+    ["media", "Media", "bi-image"],
+    ["messages", "Messages", "bi-inbox"],
+    ["analytics", "Analytics", "bi-graph-up"],
+    ["theme", "Theme", "bi-palette"],
     ["json", "JSON", "bi-code-square"]
   ];
 
   let content = null;
-  let activeSection = "basics";
+  let adminState = { media: [], messages: [], activity: [], analytics: {} };
+  let csrfToken = localStorage.getItem("portfolio_admin_csrf") || "";
+  let activeSection = "overview";
 
   const loginView = document.querySelector("#loginView");
   const editorView = document.querySelector("#editorView");
@@ -50,10 +60,14 @@
   function field(label, path, type = "text", className = "") {
     const value = pathGet(content, path) ?? "";
     const id = `field-${path.replace(/[^a-z0-9]/gi, "-")}`;
+    const checked = path.endsWith(".isPublished") ? value !== false : value === true;
     const input =
       type === "textarea"
         ? `<textarea id="${id}" data-path="${path}">${escapeHtml(value)}</textarea>`
+        : type === "checkbox"
+          ? `<label class="toggle-field"><input id="${id}" data-path="${path}" type="checkbox" ${checked ? "checked" : ""} /> <span>${escapeHtml(label)}</span></label>`
         : `<input id="${id}" data-path="${path}" type="${type}" value="${escapeHtml(value)}" />`;
+    if (type === "checkbox") return `<div class="${className}">${input}</div>`;
     return `<div class="${className}"><label for="${id}">${escapeHtml(label)}</label>${input}</div>`;
   }
 
@@ -67,7 +81,8 @@
   function bindFields(root = panels) {
     root.querySelectorAll("[data-path]").forEach((input) => {
       input.addEventListener("input", () => {
-        pathSet(content, input.dataset.path, input.type === "number" ? Number(input.value) : input.value);
+        const value = input.type === "checkbox" ? input.checked : input.type === "number" ? Number(input.value) : input.value;
+        pathSet(content, input.dataset.path, value);
         renderJsonPanel();
       });
     });
@@ -104,6 +119,8 @@
         ${field("Browser title", "meta.title", "text", "full")}
         ${field("Meta description", "meta.description", "textarea", "full")}
         ${field("Meta keywords", "meta.keywords", "textarea", "full")}
+        ${field("Site URL", "meta.siteUrl")}
+        ${field("Open Graph image", "meta.ogImage")}
         ${field("First name", "profile.firstName")}
         ${field("Last name", "profile.lastName")}
         ${field("Site name", "profile.siteName")}
@@ -120,6 +137,25 @@
             )
           )
           .join("")}
+      </div>`
+    );
+  }
+
+  function renderOverview() {
+    const mainProjects = content.projects?.main?.length || 0;
+    const freelanceProjects = content.projects?.freelance?.length || 0;
+    const publishedProjects = [...(content.projects?.main || []), ...(content.projects?.freelance || [])].filter((item) => item.isPublished !== false).length;
+    const analytics = adminState.analytics || {};
+    return panel(
+      "overview",
+      `<div class="overview-grid">
+        <article class="stat-card"><span>Total projects</span><strong>${mainProjects + freelanceProjects}</strong></article>
+        <article class="stat-card"><span>Published projects</span><strong>${publishedProjects}</strong></article>
+        <article class="stat-card"><span>Messages</span><strong>${(adminState.messages || []).length}</strong></article>
+        <article class="stat-card"><span>Page views</span><strong>${analytics.views || 0}</strong></article>
+      </div>
+      <div class="group"><div class="group-header"><h3>Last activity</h3></div>
+        <div class="activity-list">${(adminState.activity || []).slice(0, 8).map((item) => `<p><strong>${escapeHtml(item.message)}</strong><br><span>${escapeHtml(item.at || "")}</span>${item.commit ? `<code>${escapeHtml(item.commit)}</code>` : ""}</p>`).join("") || "<p>No activity yet.</p>"}</div>
       </div>`
     );
   }
@@ -188,7 +224,7 @@
   }
 
   function projectFields(path) {
-    return `<div class="field-grid">${field("Tag", `${path}.tag`)}${field("Title", `${path}.title`)}${field("Image path", `${path}.image`)}${field("Image alt", `${path}.imageAlt`)}${field("Extra image class", `${path}.imageClass`)}${field("Tech, comma separated", `${path}.techText`)}${field("Description", `${path}.description`, "textarea", "full")}${field("Links as label|url per line", `${path}.linksText`, "textarea", "full")}</div>`;
+    return `<div class="field-grid">${field("Published", `${path}.isPublished`, "checkbox")}${field("Featured", `${path}.featured`, "checkbox")}${field("Tag", `${path}.tag`)}${field("Title", `${path}.title`)}${field("Image path", `${path}.image`)}${field("Image alt", `${path}.imageAlt`)}${field("Extra image class", `${path}.imageClass`)}${field("Tech, comma separated", `${path}.techText`)}${field("Description", `${path}.description`, "textarea", "full")}${field("Links as label|url per line", `${path}.linksText`, "textarea", "full")}</div>`;
   }
 
   function renderProjects() {
@@ -204,6 +240,43 @@
     );
   }
 
+  function serviceFields(path) {
+    return `<div class="field-grid">${field("Published", `${path}.isPublished`, "checkbox")}${field("Icon class", `${path}.icon`)}${field("Title", `${path}.title`)}${field("Price", `${path}.price`)}${field("Description", `${path}.description`, "textarea", "full")}</div>`;
+  }
+
+  function renderServices() {
+    content.services = content.services || { title: "Services", items: [] };
+    return panel(
+      "services",
+      `<div class="group"><div class="group-header"><h3>Services</h3><button type="button" data-add="services.items"><i class="bi bi-plus-lg"></i> Add</button></div>
+        <div class="field-grid">${field("Section title", "services.title", "text", "full")}</div>
+        ${(content.services.items || []).map((item, index) => repeatCard(item.title || `Service ${index + 1}`, serviceFields(`services.items.${index}`), `services.items.${index}`)).join("")}
+      </div>`
+    );
+  }
+
+  function renderTestimonials() {
+    content.testimonials = content.testimonials || { title: "Testimonials", items: [] };
+    return panel(
+      "testimonials",
+      `<div class="group"><div class="group-header"><h3>Testimonials</h3><button type="button" data-add="testimonials.items"><i class="bi bi-plus-lg"></i> Add</button></div>
+        <div class="field-grid">${field("Section title", "testimonials.title", "text", "full")}</div>
+        ${(content.testimonials.items || []).map((item, index) => repeatCard(item.name || `Testimonial ${index + 1}`, `<div class="field-grid">${field("Published", `testimonials.items.${index}.isPublished`, "checkbox")}${field("Name", `testimonials.items.${index}.name`)}${field("Role", `testimonials.items.${index}.role`)}${field("Quote", `testimonials.items.${index}.quote`, "textarea", "full")}</div>`, `testimonials.items.${index}`)).join("")}
+      </div>`
+    );
+  }
+
+  function renderBlog() {
+    content.blog = content.blog || { title: "Notes", items: [] };
+    return panel(
+      "blog",
+      `<div class="group"><div class="group-header"><h3>Blog / Notes</h3><button type="button" data-add="blog.items"><i class="bi bi-plus-lg"></i> Add</button></div>
+        <div class="field-grid">${field("Section title", "blog.title", "text", "full")}</div>
+        ${(content.blog.items || []).map((item, index) => repeatCard(item.title || `Post ${index + 1}`, `<div class="field-grid">${field("Published", `blog.items.${index}.isPublished`, "checkbox")}${field("Title", `blog.items.${index}.title`)}${field("Date", `blog.items.${index}.date`, "date")}${field("URL", `blog.items.${index}.url`, "text", "full")}${field("Excerpt", `blog.items.${index}.excerpt`, "textarea", "full")}</div>`, `blog.items.${index}`)).join("")}
+      </div>`
+    );
+  }
+
   function renderContact() {
     return panel(
       "contact",
@@ -214,6 +287,53 @@
         ${field("Email", "contact.email")}
         ${field("Email link", "contact.emailLink")}
         ${field("Footer text", "contact.footerText", "textarea", "full")}
+      </div></div>`
+    );
+  }
+
+  function renderMedia() {
+    return panel(
+      "media",
+      `<div class="group"><div class="group-header"><h3>Upload Media</h3></div>
+        <label for="mediaUpload">Image, SVG, PDF, or CV file</label>
+        <input id="mediaUpload" type="file" accept="image/*,.svg,.pdf" />
+        <p class="status">Uploaded files are committed to <code>assets/uploads</code>. Use the returned path in image or CV fields.</p>
+      </div>
+      <div class="media-grid">${(adminState.media || []).map((item) => `<article class="group media-item">${item.type?.startsWith("image/") ? `<img src="${escapeHtml(item.url)}" alt="">` : `<div class="file-tile"><i class="bi bi-file-earmark-pdf"></i></div>`}<h3>${escapeHtml(item.title)}</h3><code>${escapeHtml(item.url)}</code><button type="button" class="admin-button-secondary copy-path" data-copy="${escapeHtml(item.url)}"><i class="bi bi-copy"></i> Copy path</button></article>`).join("") || '<div class="group"><p>No uploads yet.</p></div>'}</div>`
+    );
+  }
+
+  function renderMessages() {
+    return panel(
+      "messages",
+      `<div class="message-grid">${(adminState.messages || []).map((item) => `<article class="group"><h3>${escapeHtml(item.subject)}</h3><p><strong>${escapeHtml(item.name)}</strong><br><a href="mailto:${escapeHtml(item.email)}">${escapeHtml(item.email)}</a></p><p>${escapeHtml(item.message)}</p><span>${escapeHtml(item.createdAt || "")}</span></article>`).join("") || '<div class="group"><p>No contact messages yet.</p></div>'}</div>`
+    );
+  }
+
+  function renderAnalytics() {
+    const analytics = adminState.analytics || {};
+    return panel(
+      "analytics",
+      `<div class="overview-grid">
+        <article class="stat-card"><span>Views</span><strong>${analytics.views || 0}</strong></article>
+        <article class="stat-card"><span>Contact clicks</span><strong>${analytics.contactClicks || 0}</strong></article>
+        <article class="stat-card"><span>CV downloads</span><strong>${analytics.cvDownloads || 0}</strong></article>
+        <article class="stat-card"><span>Project clicks</span><strong>${analytics.projectClicks || 0}</strong></article>
+      </div>
+      <div class="group"><div class="group-header"><h3>Recent events</h3></div>${(analytics.events || []).slice(0, 20).map((item) => `<p><strong>${escapeHtml(item.type)}</strong> ${escapeHtml(item.label || "")}<br><span>${escapeHtml(item.at || "")}</span></p>`).join("") || "<p>No analytics yet.</p>"}</div>`
+    );
+  }
+
+  function renderTheme() {
+    content.theme = content.theme || { mode: "dark", accentColor: "#ff7a18", accentSecondary: "#ffd35f" };
+    return panel(
+      "theme",
+      `<div class="group"><div class="group-header"><h3>Theme and SEO</h3></div><div class="field-grid">
+        ${field("Theme mode", "theme.mode")}
+        ${field("Accent color", "theme.accentColor", "color")}
+        ${field("Secondary accent", "theme.accentSecondary", "color")}
+        ${field("Open Graph image", "meta.ogImage")}
+        ${field("Site URL", "meta.siteUrl")}
       </div></div>`
     );
   }
@@ -269,6 +389,35 @@
     return copy;
   }
 
+  function isValidLink(value) {
+    if (!value) return true;
+    return /^(https?:\/\/|mailto:|tel:|#|\/|\.\/)/i.test(String(value));
+  }
+
+  function validateBeforeSave(next) {
+    const errors = [];
+    if (!next.profile?.siteName) errors.push("Site name is required.");
+    if (next.contact?.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(next.contact.email)) errors.push("Contact email is invalid.");
+
+    for (const skill of next.skills?.items || []) {
+      if (Number(skill.level) < 0 || Number(skill.level) > 100) errors.push(`${skill.name || "Skill"} level must be between 0 and 100.`);
+    }
+
+    const projectGroups = [...(next.projects?.main || []), ...(next.projects?.freelance || [])];
+    for (const project of projectGroups) {
+      if (!project.title) errors.push("Every project needs a title.");
+      for (const link of project.links || []) {
+        if (!isValidLink(link.url)) errors.push(`${project.title || "Project"} has an invalid link: ${link.url}`);
+      }
+    }
+
+    for (const link of next.socials || []) {
+      if (!isValidLink(link.url)) errors.push(`${link.label || "Social link"} has an invalid URL.`);
+    }
+
+    if (errors.length) throw new Error(errors.slice(0, 4).join(" "));
+  }
+
   function showSection() {
     renderNav();
     activeTitle.textContent = sections.find(([key]) => key === activeSection)?.[1] || "Admin";
@@ -278,7 +427,7 @@
   }
 
   function renderEditor() {
-    panels.innerHTML = [renderBasics(), renderHero(), renderAbout(), renderSkills(), renderResume(), renderProjects(), renderContact(), renderJson()].join("");
+    panels.innerHTML = [renderOverview(), renderBasics(), renderHero(), renderAbout(), renderSkills(), renderResume(), renderProjects(), renderServices(), renderTestimonials(), renderBlog(), renderContact(), renderMedia(), renderMessages(), renderAnalytics(), renderTheme(), renderJson()].join("");
     bindFields();
     bindRepeatActions();
     bindRawJson();
@@ -295,7 +444,10 @@
     if (path === "resume.experiences") return { role: "Role", period: "Period", company: "Company", logo: "assets/img/logobits.png", description: "Description" };
     if (path === "resume.education") return { title: "Degree", period: "Period", place: "School", description: "Description" };
     if (path === "resume.snapshot") return { label: "Label", value: "Value" };
-    return { tag: "Tag", title: "Project", description: "Description", image: "assets/img/munal-portrait-2026.jpg", imageAlt: "Project preview", imageClass: "", techText: "HTML, CSS", linksText: "Live Site|#" };
+    if (path === "services.items") return { icon: "bi-star", title: "Service", description: "Description", price: "Custom quote", isPublished: true };
+    if (path === "testimonials.items") return { name: "Client", role: "Project", quote: "Quote", isPublished: true };
+    if (path === "blog.items") return { title: "New note", date: new Date().toISOString().slice(0, 10), excerpt: "Excerpt", url: "#contact", isPublished: true };
+    return { tag: "Tag", title: "Project", description: "Description", image: "assets/img/munal-portrait-2026.jpg", imageAlt: "Project preview", imageClass: "", featured: false, isPublished: true, techText: "HTML, CSS", linksText: "Live Site|#" };
   }
 
   function bindRepeatActions() {
@@ -334,9 +486,15 @@
     const response = await fetch("/api/admin-content");
     if (!response.ok) throw new Error((await response.json().catch(() => ({}))).message || "Could not load content.");
     content = prepareEditorContent(await response.json());
+    await loadAdminState();
     loginView.hidden = true;
     editorView.hidden = false;
     renderEditor();
+  }
+
+  async function loadAdminState() {
+    const response = await fetch("/api/admin-state");
+    adminState = response.ok ? await response.json() : { media: [], messages: [], activity: [], analytics: {} };
   }
 
   document.querySelector("#loginForm").addEventListener("submit", async (event) => {
@@ -352,6 +510,9 @@
         body: JSON.stringify({ password: document.querySelector("#adminPassword").value })
       });
       if (!response.ok) throw new Error((await response.json().catch(() => ({}))).message || "Login failed.");
+      const result = await response.json();
+      csrfToken = result.csrfToken || "";
+      localStorage.setItem("portfolio_admin_csrf", csrfToken);
       await loadContent();
     } catch (error) {
       status.textContent = error.message;
@@ -362,10 +523,12 @@
   document.querySelector("#saveButton").addEventListener("click", async () => {
     setStatus("Saving...");
     try {
+      const saveContent = toSaveableContent();
+      validateBeforeSave(saveContent);
       const response = await fetch("/api/admin-content", {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(toSaveableContent())
+        headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+        body: JSON.stringify(saveContent)
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.message || "Save failed.");
@@ -373,6 +536,18 @@
     } catch (error) {
       setStatus(error.message, "error");
     }
+  });
+
+  document.querySelector("#previewButton").addEventListener("click", () => {
+    localStorage.setItem("portfolio_preview_content", JSON.stringify(toSaveableContent()));
+    window.open("/?adminPreview=1", "_blank", "noopener");
+  });
+
+  document.querySelector("#logoutButton").addEventListener("click", async () => {
+    await fetch("/api/admin-logout", { method: "POST" }).catch(() => {});
+    localStorage.removeItem("portfolio_admin_csrf");
+    loginView.hidden = false;
+    editorView.hidden = true;
   });
 
   document.querySelector("#exportButton").addEventListener("click", () => {
@@ -383,6 +558,40 @@
     link.download = "site-content.json";
     link.click();
     URL.revokeObjectURL(url);
+  });
+
+  panels.addEventListener("change", async (event) => {
+    if (event.target.id !== "mediaUpload") return;
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setStatus("Uploading media...");
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const response = await fetch("/api/admin-media", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+          body: JSON.stringify({ fileName: file.name, title: file.name, dataUrl: reader.result })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.message || "Upload failed.");
+        await loadAdminState();
+        renderEditor();
+        activeSection = "media";
+        showSection();
+        setStatus(`Uploaded ${result.url}`, "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  panels.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-copy]");
+    if (!button) return;
+    await navigator.clipboard.writeText(button.dataset.copy);
+    setStatus("Path copied.", "success");
   });
 
   document.querySelector("#importFile").addEventListener("change", async (event) => {

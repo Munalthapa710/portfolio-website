@@ -1,62 +1,61 @@
-const crypto = require("crypto");
+const {
+  json,
+  getBody,
+  clientIp,
+  makeSessionToken,
+  makeCsrfToken,
+  sessionCookie,
+  csrfCookie
+} = require("./_admin-utils");
 
-const COOKIE_NAME = "portfolio_admin";
-const ONE_WEEK = 60 * 60 * 24 * 7;
+const attempts = new Map();
+const MAX_ATTEMPTS = 6;
+const WINDOW_MS = 15 * 60 * 1000;
 
-function sendJson(response, status, body, headers = {}) {
-  response.statusCode = status;
-  Object.entries(headers).forEach(([key, value]) => response.setHeader(key, value));
-  response.setHeader("Content-Type", "application/json; charset=utf-8");
-  response.end(JSON.stringify(body));
+function isRateLimited(ip) {
+  const now = Date.now();
+  const record = attempts.get(ip) || { count: 0, first: now };
+  if (now - record.first > WINDOW_MS) {
+    attempts.set(ip, { count: 0, first: now });
+    return false;
+  }
+  return record.count >= MAX_ATTEMPTS;
 }
 
-function getBody(request) {
-  return new Promise((resolve, reject) => {
-    let body = "";
-    request.on("data", (chunk) => {
-      body += chunk;
-      if (body.length > 1e6) {
-        request.destroy();
-        reject(new Error("Request body too large"));
-      }
-    });
-    request.on("end", () => resolve(body ? JSON.parse(body) : {}));
-    request.on("error", reject);
-  });
-}
-
-function sign(value) {
-  const secret = process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD;
-  return crypto.createHmac("sha256", secret).update(value).digest("hex");
-}
-
-function makeToken() {
-  const expires = Date.now() + ONE_WEEK * 1000;
-  const nonce = crypto.randomBytes(16).toString("hex");
-  const value = `${expires}.${nonce}`;
-  return `${value}.${sign(value)}`;
+function recordFailure(ip) {
+  const now = Date.now();
+  const record = attempts.get(ip) || { count: 0, first: now };
+  attempts.set(ip, { count: record.count + 1, first: record.first });
 }
 
 module.exports = async function handler(request, response) {
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST");
-    return sendJson(response, 405, { message: "Method not allowed" });
+    return json(response, 405, { message: "Method not allowed" });
   }
 
   if (!process.env.ADMIN_PASSWORD) {
-    return sendJson(response, 500, { message: "ADMIN_PASSWORD is not configured." });
+    return json(response, 500, { message: "ADMIN_PASSWORD is not configured." });
+  }
+
+  const ip = clientIp(request);
+  if (isRateLimited(ip)) {
+    return json(response, 429, { message: "Too many login attempts. Try again later." });
   }
 
   try {
-    const body = await getBody(request);
+    const body = await getBody(request, 1e6);
     if (body.password !== process.env.ADMIN_PASSWORD) {
-      return sendJson(response, 401, { message: "Invalid password." });
+      recordFailure(ip);
+      return json(response, 401, { message: "Invalid password." });
     }
 
-    const secure = request.headers["x-forwarded-proto"] === "https" ? "; Secure" : "";
-    const cookie = `${COOKIE_NAME}=${makeToken()}; Path=/; Max-Age=${ONE_WEEK}; HttpOnly; SameSite=Lax${secure}`;
-    return sendJson(response, 200, { ok: true }, { "Set-Cookie": cookie });
+    attempts.delete(ip);
+    const secure = request.headers["x-forwarded-proto"] === "https";
+    const csrf = makeCsrfToken();
+    response.setHeader("Set-Cookie", [sessionCookie(makeSessionToken(60 * 60 * 24 * 7), secure), csrfCookie(csrf, secure)]);
+    return json(response, 200, { ok: true, csrfToken: csrf });
   } catch (error) {
-    return sendJson(response, 400, { message: error.message || "Login failed." });
+    return json(response, 400, { message: error.message || "Login failed." });
   }
 };

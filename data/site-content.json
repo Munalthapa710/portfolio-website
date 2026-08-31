@@ -2,7 +2,14 @@
   "meta": {
     "title": "Munal Thapa | Portfolio",
     "description": "Portfolio of Munal Thapa, a web developer and UI designer building bold, responsive digital experiences.",
-    "keywords": "Munal Thapa, portfolio, web developer, UI designer, frontend developer, Nepal"
+    "keywords": "Munal Thapa, portfolio, web developer, UI designer, frontend developer, Nepal",
+    "siteUrl": "https://www.munalthapa710.com.np",
+    "ogImage": "assets/img/munal-portrait-2026.jpg"
+  },
+  "theme": {
+    "mode": "dark",
+    "accentColor": "#ff7a18",
+    "accentSecondary": "#ffd35f"
   },
   "profile": {
     "firstName": "Munal",
@@ -89,6 +96,8 @@
         "description": "A redesigned personal site focused on stronger visual impact, custom styling, and direct contact flow.",
         "image": "assets/img/munal-portrait-2026.jpg",
         "imageAlt": "Munal portfolio feature",
+        "featured": true,
+        "isPublished": true,
         "tech": ["HTML", "CSS", "JavaScript"],
         "links": [
           { "label": "Source", "url": "https://github.com/Munalthapa710/portfolio-website" },
@@ -101,6 +110,8 @@
         "description": "A finance-focused web application with a practical interface for tracking activity, managing flows, and keeping the experience clear across devices.",
         "image": "assets/img/kashtrak-dashboard.png",
         "imageAlt": "KashTrak project preview",
+        "featured": false,
+        "isPublished": true,
         "tech": ["Finance App", "Web Platform", "Responsive UI"],
         "links": [
           { "label": "Source", "url": "https://github.com/Munalthapa710/KashTrak.git" },
@@ -113,6 +124,8 @@
         "description": "A private document storage dashboard for uploads, file type insights, favorites, recent activity, and secure document management.",
         "image": "assets/img/doc-vault.png",
         "imageAlt": "Document Vault dashboard preview",
+        "featured": false,
+        "isPublished": true,
         "tech": ["Dashboard", "Document Storage", "Web App"],
         "links": [
           { "label": "Live Site", "url": "https://docvault.munalthapa710.com.np/login" },
@@ -126,6 +139,8 @@
         "image": "assets/img/snake-ladder-preview.png",
         "imageAlt": "Snake and Ladder game board preview",
         "imageClass": "project-image-contain",
+        "featured": false,
+        "isPublished": true,
         "tech": ["Game UI", "JavaScript", "Responsive"],
         "links": [
           { "label": "Live Site", "url": "https://snakeandladder.munalthapa710.com.np/" },
@@ -138,6 +153,8 @@
         "description": "A deployed web app experience focused on day-to-day task flow, clearer structure, and practical usability.",
         "image": "assets/img/dailytrack-preview.svg",
         "imageAlt": "DailyTrack web app preview",
+        "featured": false,
+        "isPublished": true,
         "tech": ["Web App", "Deployment", "UI Flow"],
         "links": [
           { "label": "Live Site", "url": "https://dailytrack-web.onrender.com" },
@@ -153,11 +170,62 @@
         "description": "A dashboard-driven inventory system for tracking warehouse items, approvals, low-stock alerts, and recent activity.",
         "image": "assets/img/viva-construction-inventory.png",
         "imageAlt": "Viva Construction inventory dashboard preview",
+        "featured": true,
+        "isPublished": true,
         "tech": ["Freelance", "Inventory", "Dashboard"],
         "links": [
           { "label": "Live Site", "url": "https://store.vivaconstruction.ltd/" },
           { "label": "Discuss a project", "url": "#contact" }
         ]
+      }
+    ]
+  },
+  "services": {
+    "title": "Services",
+    "items": [
+      {
+        "icon": "bi-window-sidebar",
+        "title": "Portfolio Websites",
+        "description": "Personal websites that present your work clearly, load quickly, and feel polished across screens.",
+        "price": "Custom quote",
+        "isPublished": true
+      },
+      {
+        "icon": "bi-layout-text-window-reverse",
+        "title": "Landing Pages",
+        "description": "Focused pages for launches, services, campaigns, and freelance offers with clean conversion flow.",
+        "price": "Custom quote",
+        "isPublished": true
+      },
+      {
+        "icon": "bi-brush",
+        "title": "UI Refresh",
+        "description": "Typography, spacing, color, and layout improvements for existing websites or dashboards.",
+        "price": "Custom quote",
+        "isPublished": true
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "items": [
+      {
+        "name": "Client Project",
+        "role": "Freelance website",
+        "quote": "Clear communication, practical UI decisions, and a clean delivery process.",
+        "isPublished": true
+      }
+    ]
+  },
+  "blog": {
+    "title": "Notes",
+    "items": [
+      {
+        "title": "How I approach responsive portfolio design",
+        "date": "2026-08-31",
+        "excerpt": "A short look at the structure, spacing, and content choices that make a portfolio easier to scan.",
+        "url": "#contact",
+        "isPublished": true
       }
     ]
   },

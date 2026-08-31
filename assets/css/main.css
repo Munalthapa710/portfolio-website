@@ -66,9 +66,68 @@ img {
   display: block;
 }
 
+.contact-website-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.light-theme {
+  --background-color: #f8fafc;
+  --surface-color: rgba(255, 255, 255, 0.86);
+  --surface-strong: #ffffff;
+  --surface-soft: rgba(15, 23, 42, 0.05);
+  --default-color: #334155;
+  --muted-color: #64748b;
+  --heading-color: #0f172a;
+  --border-color: rgba(15, 23, 42, 0.1);
+  background:
+    radial-gradient(circle at top left, rgba(255, 122, 24, 0.16), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 55%, #eef2f7 100%);
+}
+
 .section {
   position: relative;
   padding: var(--section-padding) 0;
+}
+
+.dynamic-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.dynamic-card {
+  padding: 28px;
+  border-radius: 22px;
+}
+
+.dynamic-card > i {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--contrast-color);
+  background: linear-gradient(135deg, var(--accent-color), #ff4d6d);
+  font-size: 1.2rem;
+}
+
+.dynamic-card h3 {
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+}
+
+.dynamic-card strong,
+.dynamic-card a,
+.dynamic-card span {
+  display: inline-flex;
+  margin-top: 16px;
+  color: var(--accent-secondary);
+  font-weight: 800;
 }
 
 .section-heading {
@@ -1100,6 +1159,7 @@ textarea.form-control {
   .skills-layout,
   .resume-layout,
   .project-grid,
+  .dynamic-card-grid,
   .contact-layout {
     grid-template-columns: 1fr;
   }
