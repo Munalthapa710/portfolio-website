@@ -120,8 +120,13 @@ async function githubRequest(url, options = {}) {
   const config = githubConfig();
   if (!config) throw new Error("GitHub persistence is not configured.");
 
-  const response = await fetch(url, {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 12000);
+  let response;
+  try {
+    response = await fetch(url, {
     ...options,
+    signal: controller.signal,
     headers: {
       Authorization: `Bearer ${config.token}`,
       Accept: "application/vnd.github+json",
@@ -129,7 +134,13 @@ async function githubRequest(url, options = {}) {
       "User-Agent": "portfolio-admin",
       ...(options.headers || {})
     }
-  });
+    });
+  } catch (error) {
+    if (error.name === "AbortError") throw new Error("GitHub request timed out. Please try again.");
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload?.message || `GitHub request failed with ${response.status}`);
   return payload;

@@ -32,6 +32,17 @@
   const activeTitle = document.querySelector("#activeTitle");
   const editorStatus = document.querySelector("#editorStatus");
 
+  function requestWithTimeout(url, options = {}, timeoutMs = 15000) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+    return fetch(url, { ...options, signal: controller.signal }).finally(() => window.clearTimeout(timeout));
+  }
+
+  function requestError(error, fallback) {
+    if (error?.name === "AbortError") return "The server took too long to respond. Please try again.";
+    return error?.message || fallback;
+  }
+
   function setStatus(message, type = "") {
     editorStatus.textContent = message;
     editorStatus.className = `status ${type}`.trim();
@@ -483,7 +494,7 @@
   }
 
   async function loadContent() {
-    const response = await fetch("/api/admin-content");
+    const response = await requestWithTimeout("/api/admin-content");
     if (!response.ok) throw new Error((await response.json().catch(() => ({}))).message || "Could not load content.");
     content = prepareEditorContent(await response.json());
     await loadAdminState();
@@ -493,18 +504,20 @@
   }
 
   async function loadAdminState() {
-    const response = await fetch("/api/admin-state");
+    const response = await requestWithTimeout("/api/admin-state");
     adminState = response.ok ? await response.json() : { media: [], messages: [], activity: [], analytics: {} };
   }
 
   document.querySelector("#loginForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     const status = document.querySelector("#loginStatus");
+    const submitButton = event.currentTarget.querySelector("button[type=submit]");
     status.textContent = "Signing in...";
     status.className = "status";
+    submitButton.disabled = true;
 
     try {
-      const response = await fetch("/api/admin-login", {
+      const response = await requestWithTimeout("/api/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password: document.querySelector("#adminPassword").value })
@@ -513,10 +526,13 @@
       const result = await response.json();
       csrfToken = result.csrfToken || "";
       localStorage.setItem("portfolio_admin_csrf", csrfToken);
+      status.textContent = "Loading dashboard...";
       await loadContent();
     } catch (error) {
-      status.textContent = error.message;
+      status.textContent = requestError(error, "Login failed.");
       status.className = "status error";
+    } finally {
+      submitButton.disabled = false;
     }
   });
 
