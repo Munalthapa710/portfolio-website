@@ -29,7 +29,7 @@
     }
 
     try {
-      const response = await fetch("/api/content", { cache: "no-store" });
+      const response = await fetch("/api/content");
       if (!response.ok) throw new Error("Content request failed");
       return response.json();
     } catch (error) {
@@ -367,16 +367,6 @@
       e.stopImmediatePropagation();
     });
   });
-
-  /**
-   * Preloader
-   */
-  const preloader = document.querySelector("#preloader");
-  if (preloader) {
-    window.addEventListener("load", () => {
-      preloader.remove();
-    });
-  }
 
   /**
    * Scroll top button
