@@ -3,10 +3,17 @@
   "messages": [],
   "activity": [],
   "analytics": {
-    "views": 0,
+    "views": 1,
     "contactClicks": 0,
     "cvDownloads": 0,
     "projectClicks": 0,
-    "events": []
+    "events": [
+      {
+        "type": "view",
+        "label": "Munal Thapa | Portfolio",
+        "path": "/",
+        "at": "2026-08-31T08:01:29.485Z"
+      }
+    ]
   }
 }
